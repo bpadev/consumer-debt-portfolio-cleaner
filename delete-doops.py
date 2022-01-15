@@ -3,11 +3,17 @@
 # delete the accounts within the CSV files in the other folder that match said file id numbers.
 
 # Approach
-# -
+# - Combine purchased portfolios into 1 single .xlsx file to be able to compare against for sale portfolios.
+# - Only read the accountid column for the purchased portfolio to increase speed.
+# - Go through the whole for sale portfolio row by row and compare each account id against account ids in purchased portfolio.
+# - If match, remove row. (improvement: if no match, add to new dataframe instead of needing to remove row and shift whole spreadsheet up by a row.)
+# - Once done, write df to .xlsx in pulled/ directory
 
 import pandas as pd
 import os
 import glob
+
+# Script for concatenating multiple .xlsx into one .xlsx
 
 # path = os.getcwd()
 # csv_files = glob.glob(os.path.join(path, "purchased/*.xlsx"))
@@ -21,37 +27,17 @@ import glob
 #
 # writer.save()
 
-# for f in csv_files:
-#
-#     df = pd.read_excel(f, usecols="A", ignore_index=True)
-#
-#     print(df)
+# Portfolios to read
+forsale_portfolio_path = "test_new/forsale.xlsx"
+purchased_portfolio_path = "test_purchased/purchased.xlsx"
 
-# real
-new_path = "newnew/Connect 1 Inventory 4.xlsx"
-purchased_path = "test.xlsx"
-
-# test
-# new_path = "test_new/new.xlsx"
-# purchased_path = "test_purchased/purchased.xlsx"
-
-# def logic(val):
-
-    # if val in purchased_df.values:
-    #     # purchased_df.drop([val.index])
-    #     print(val.index)
-    # else:
-    #     print(True)
-# new_df = pd.read_excel(new_path, usecols="A", skiprows=lambda x: logic(x))
+# Read portfolios and load in as Data Frames
+forsale_portfolio_df = pd.read_excel(forsale_portfolio_path)
+purchased_portfolio_df = pd.read_excel(purchased_portfolio_path, usecols="A")
 
 
-# purchased_df = pd.read_excel(purchased_path, usecols="A")
-new_df = pd.read_excel(new_path, usecols="A")
+print(forsale_portfolio_df, purchased_portfolio_df)
 
-# Working piece for comparing purchased values with new and dropping duplicates.
-mod_new = new_df
-
-dups = []
 # #
 # for i in range(len(new_df)):
 #     # this is the column value
@@ -68,7 +54,3 @@ dups = []
 # mod_new.to_excel(writer, sheet_name="Sheet1")
 #
 # writer.save()
-
-
-print(mod_new)
-
