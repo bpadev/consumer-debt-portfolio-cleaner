@@ -35,14 +35,12 @@ purchased_portfolio_path = "test_purchased/purchased.xlsx"
 forsale_portfolio_df = pd.read_excel(forsale_portfolio_path)
 purchased_portfolio_df = pd.read_excel(purchased_portfolio_path, usecols="A")
 
-
 # Create new empty data frame that will only contain fresh accounts, keep column headers
 cleaned_portfolio_df = pd.DataFrame(columns=forsale_portfolio_df.columns)
 cleaned_row = 0
 
 # Search through each row of forsale portfolio, compare each account id against purchased, if no match, push to new dataframe
 forsale_portfolio_length = len(forsale_portfolio_df)
-
 
 for i in range(forsale_portfolio_length):
     # this is the column value
