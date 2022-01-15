@@ -28,12 +28,13 @@ import glob
 # writer.save()
 
 # Portfolios to read
-forsale_portfolio_path = "test_forsale/forsale.xlsx"
-purchased_portfolio_path = "test_purchased/purchased.xlsx"
+forsale_portfolio_path = "forsale/Connect1-Inventory (4).xlsx"
+purchased_portfolio_path = "purchased/test.xlsx"
 
 # Read portfolios and load in as Data Frames
 forsale_portfolio_df = pd.read_excel(forsale_portfolio_path)
-purchased_portfolio_df = pd.read_excel(purchased_portfolio_path, usecols="A")
+purchased_portfolio_df = pd.read_excel(purchased_portfolio_path, usecols="B")
+
 
 # Create new empty data frame that will only contain fresh accounts, keep column headers
 cleaned_portfolio_df = pd.DataFrame(columns=forsale_portfolio_df.columns)
@@ -42,9 +43,10 @@ cleaned_row = 0
 # Search through each row of forsale portfolio, compare each account id against purchased, if no match, push to new dataframe
 forsale_portfolio_length = len(forsale_portfolio_df)
 
+
 for i in range(forsale_portfolio_length):
     # this is the column value
-    val = forsale_portfolio_df.iloc[i, 0]
+    val = forsale_portfolio_df.iloc[i, 1]
     
     if val in purchased_portfolio_df.iloc[:, 0].values:
         print("duplicate", i)
@@ -52,10 +54,16 @@ for i in range(forsale_portfolio_length):
         cleaned_portfolio_df.loc[cleaned_row] = forsale_portfolio_df.loc[i]
         cleaned_row += 1
 
-    print("Cleaned", i, "rows out of", forsale_portfolio_length)
+    print("Cleaned", i, "rows out of", forsale_portfolio_length) # give percentage updates, i / forsale_portfolio_length
 
 
-writer = pd.ExcelWriter('test-headers.xlsx', engine="xlsxwriter")
+options = {}
+
+options['strings_to_formulas'] = False
+
+options['strings_to_urls'] = False 
+
+writer = pd.ExcelWriter('pulled/connect1-inventory4-pulled.xlsx', engine="xlsxwriter", options=options)
 
 cleaned_portfolio_df.to_excel(writer, sheet_name="Sheet1", index=False)
 
