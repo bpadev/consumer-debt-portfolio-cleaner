@@ -3,11 +3,17 @@
 # delete the accounts within the CSV files in the other folder that match said file id numbers.
 
 # Approach
-# -
+# - Combine purchased portfolios into 1 single .xlsx file to be able to compare against for sale portfolios.
+# - Only read the accountid column for the purchased portfolio to increase speed.
+# - Go through the whole for sale portfolio row by row and compare each account id against account ids in purchased portfolio.
+# - If match, remove row. (improvement: if no match, add to new dataframe instead of needing to remove row and shift whole spreadsheet up by a row.)
+# - Once done, write df to .xlsx in pulled/ directory
 
 import pandas as pd
 import os
 import glob
+
+# Script for concatenating multiple .xlsx into one .xlsx
 
 # path = os.getcwd()
 # csv_files = glob.glob(os.path.join(path, "purchased/*.xlsx"))
@@ -21,54 +27,37 @@ import glob
 #
 # writer.save()
 
-# for f in csv_files:
-#
-#     df = pd.read_excel(f, usecols="A", ignore_index=True)
-#
-#     print(df)
+# Portfolios to read
+forsale_portfolio_path = "test_forsale/forsale.xlsx"
+purchased_portfolio_path = "test_purchased/purchased.xlsx"
 
-# real
-new_path = "newnew/Connect 1 Inventory 4.xlsx"
-purchased_path = "test.xlsx"
-
-# test
-# new_path = "test_new/new.xlsx"
-# purchased_path = "test_purchased/purchased.xlsx"
-
-# def logic(val):
-
-    # if val in purchased_df.values:
-    #     # purchased_df.drop([val.index])
-    #     print(val.index)
-    # else:
-    #     print(True)
-# new_df = pd.read_excel(new_path, usecols="A", skiprows=lambda x: logic(x))
+# Read portfolios and load in as Data Frames
+forsale_portfolio_df = pd.read_excel(forsale_portfolio_path)
+purchased_portfolio_df = pd.read_excel(purchased_portfolio_path, usecols="A")
 
 
-# purchased_df = pd.read_excel(purchased_path, usecols="A")
-new_df = pd.read_excel(new_path, usecols="A")
+# Create new empty data frame that will only contain fresh accounts, keep column headers
+cleaned_portfolio_df = pd.DataFrame(columns=forsale_portfolio_df.columns)
+cleaned_row = 0
 
-# Working piece for comparing purchased values with new and dropping duplicates.
-mod_new = new_df
-
-dups = []
-# #
-# for i in range(len(new_df)):
-#     # this is the column value
-#     val = new_df.iloc[i, 1]
-#     # val = new_df.iloc[i, 0]
-#
-#     if val in purchased_df.iloc[:, 0].values:
-#         print("duplicate", i)
-#         dups.append(new_df.iloc[i])
-#         mod_new = mod_new.drop(i)
-#
-# writer = pd.ExcelWriter('pulled/connect1-pulled12.xlsx', engine="xlsxwriter")
-#
-# mod_new.to_excel(writer, sheet_name="Sheet1")
-#
-# writer.save()
+# Search through each row of forsale portfolio, compare each account id against purchased, if no match, push to new dataframe
+forsale_portfolio_length = len(forsale_portfolio_df)
 
 
-print(mod_new)
+for i in range(forsale_portfolio_length):
+    # this is the column value
+    val = forsale_portfolio_df.iloc[i, 0]
 
+    if val in purchased_portfolio_df.iloc[:, 0].values:
+        print("duplicate", i)
+    else:
+        # print(purchased_portfolio_df.iloc[i])
+        cleaned_portfolio_df.loc[cleaned_row] = forsale_portfolio_df.loc[i]
+        cleaned_row += 1
+
+
+writer = pd.ExcelWriter('test-headers.xlsx', engine="xlsxwriter")
+
+cleaned_portfolio_df.to_excel(writer, sheet_name="Sheet1", index=False)
+
+writer.save()
