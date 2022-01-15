@@ -28,7 +28,7 @@ import glob
 # writer.save()
 
 # Portfolios to read
-forsale_portfolio_path = "test_new/forsale.xlsx"
+forsale_portfolio_path = "test_forsale/forsale.xlsx"
 purchased_portfolio_path = "test_purchased/purchased.xlsx"
 
 # Read portfolios and load in as Data Frames
@@ -36,21 +36,24 @@ forsale_portfolio_df = pd.read_excel(forsale_portfolio_path)
 purchased_portfolio_df = pd.read_excel(purchased_portfolio_path, usecols="A")
 
 
-print(forsale_portfolio_df, purchased_portfolio_df)
+# Create new empty data frame that will only contain fresh accounts, keep column headers
+cleaned_portfolio_df = pd.DataFrame(data=forsale_portfolio_df.values, columns=forsale_portfolio_df.columns)
 
-# #
-# for i in range(len(new_df)):
+# Search through each row of forsale portfolio, compare each account id against purchased, if no match, push to new dataframe
+forsale_portfolio_length = len(forsale_portfolio_df)
+
+# for i in range(forsale_portfolio_length):
 #     # this is the column value
-#     val = new_df.iloc[i, 1]
-#     # val = new_df.iloc[i, 0]
-#
-#     if val in purchased_df.iloc[:, 0].values:
+#     val = forsale_portfolio_df.iloc[i, 0]
+
+#     if val in purchased_portfolio_df.iloc[:, 0].values:
 #         print("duplicate", i)
-#         dups.append(new_df.iloc[i])
-#         mod_new = mod_new.drop(i)
-#
-# writer = pd.ExcelWriter('pulled/connect1-pulled12.xlsx', engine="xlsxwriter")
-#
-# mod_new.to_excel(writer, sheet_name="Sheet1")
-#
-# writer.save()
+#     else:
+#         print("unique", i)
+
+
+writer = pd.ExcelWriter('test-headers.xlsx', engine="xlsxwriter")
+
+cleaned_portfolio_df.to_excel(writer, sheet_name="Sheet1", index=False)
+
+writer.save()
