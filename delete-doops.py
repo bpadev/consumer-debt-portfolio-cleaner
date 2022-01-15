@@ -47,13 +47,14 @@ forsale_portfolio_length = len(forsale_portfolio_df)
 for i in range(forsale_portfolio_length):
     # this is the column value
     val = forsale_portfolio_df.iloc[i, 0]
-
+    
     if val in purchased_portfolio_df.iloc[:, 0].values:
         print("duplicate", i)
     else:
-        # print(purchased_portfolio_df.iloc[i])
         cleaned_portfolio_df.loc[cleaned_row] = forsale_portfolio_df.loc[i]
         cleaned_row += 1
+
+    print("Cleaned", i, "rows out of", forsale_portfolio_length)
 
 
 writer = pd.ExcelWriter('test-headers.xlsx', engine="xlsxwriter")
