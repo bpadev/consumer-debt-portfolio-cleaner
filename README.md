@@ -1,4 +1,4 @@
-# Consumer Debt Portfolio Duplicate Remover
+# Consumer Debt Portfolio Cleaner
 
 ## Setting up Virtual Environment
 - pip install virtualenv
