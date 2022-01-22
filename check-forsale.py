@@ -16,13 +16,21 @@ def get_portfolios(directory):
   # pull directory list
   fs_portfolios = os.listdir(directory)
 
+  fs_portfolios.append('hello')
+
   return fs_portfolios
 
 
 def set_loop_settings(portfolios):
 
-  # grab number of portfolios in directory
+  # number of portfolios in directory that need to be cleaned, indices would be from 0 through number_of_portfolios - 1
   number_of_portfolios = len(portfolios)
+
+  # set initial portfolio for looping
+  current_portfolio = portfolios[0]
+
+  # build array of files
+
 
 
 def run_cleaner():
@@ -38,4 +46,4 @@ def run_cleaner():
 
 
 
-run_cleaner()
+print(get_portfolios(fs_portfolios_directory))
