@@ -20,7 +20,14 @@ fs_portfolios = os.listdir(fs_portfolios_directory)
 # set portfolio to start
 current_check = fs_portfolios.pop(0)
 
+def clean(current):
+
+  for index, row in current.iterrows():
+
+    print(index, row)
 
 for i in range(len(fs_portfolios)):
 
-  print("test")
+  current_df = pd.read_excel(fs_portfolios_directory + fs_portfolios[i])
+  
+  clean(current_df)
