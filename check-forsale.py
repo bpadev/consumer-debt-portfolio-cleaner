@@ -24,7 +24,3 @@ current_check = fs_portfolios.pop(0)
 for i in range(len(fs_portfolios)):
 
   print("test")
-
-fs_portfolios.append(current_check)
-current_check = fs_portfolios[0]
-print(fs_portfolios)
