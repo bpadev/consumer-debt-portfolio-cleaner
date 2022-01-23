@@ -13,11 +13,18 @@ import os
 fs_portfolios_directory = 'for-sale/'
 
 
-def get_portfolios(directory):
 
-  # pull directory list
-  fs_portfolios = os.listdir(directory)
+# pull directory list
+fs_portfolios = os.listdir(fs_portfolios_directory)
 
-  return fs_portfolios
+# set portfolio to start
+current_check = fs_portfolios.pop(0)
 
 
+for i in range(len(fs_portfolios)):
+
+  print("test")
+
+fs_portfolios.append(current_check)
+current_check = fs_portfolios[0]
+print(fs_portfolios)
