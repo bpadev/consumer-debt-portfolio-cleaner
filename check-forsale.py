@@ -26,8 +26,18 @@ def clean(current):
 
     print(index, row)
 
+def get_current_portfolio(p):
+
+  # make path to current portfolio
+  path = fs_portfolios_directory + p[i]
+  
+  # read and store as dataframe
+  df = pd.read_excel(path)
+
+  return df
+
+
 for i in range(len(fs_portfolios)):
 
-  current_df = pd.read_excel(fs_portfolios_directory + fs_portfolios[i])
-  
-  clean(current_df)
+  # gets current portfolio as df
+  get_current_portfolio(fs_portfolios)
