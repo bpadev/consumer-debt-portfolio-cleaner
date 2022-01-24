@@ -36,21 +36,4 @@ def make_dataframes(directory):
     # store as dataframes
     dataframes.append(df)
 
-  print(dataframes[0])
-
-
-
-
-# for i in range(files_to_clean):
-
-#   # get data frames, single current portfolio and then list of portfolios to compare
-#   get_dataframes(fs_portfolios[0], fs_portfolios)
-#   # current_portfolio_df = pd.read_excel(current_portfolio)
-  
-#   # remove current portfolio from list
-#   current_portfolio_name = fs_portfolios.pop(0)
-
-#   # append back
-#   fs_portfolios.append(current_portfolio_name)
-
-make_dataframes(fs_directory_path)
+  return dataframes
