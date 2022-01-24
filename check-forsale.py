@@ -15,18 +15,25 @@ fs_directory_path = 'for-sale/'
 
 fs_portfolios = os.listdir(fs_directory_path)
 
-def get_current_portfolio(p):
+# Store amount of files for loop
+files_to_clean = len(fs_portfolios)
 
-  # make path to current portfolio
-  path = fs_portfolios_directory + p[i]
+for i in range(files_to_clean):
+
+  print(fs_portfolios)
+
+  # Current portfolio in loop
+  current_portfolio = fs_directory_path + fs_portfolios[0]
+
+  # read current portfolio as df
+  # current_portfolio_df = pd.read_excel(current_portfolio)
   
-  # read and store as dataframe
-  df = pd.read_excel(path)
+  # remove current portfolio from list
+  current_portfolio_name = fs_portfolios.pop(0)
 
-  return df
+  # clean
 
+  # append back
+  fs_portfolios.append(current_portfolio_name)
 
-for i in range(len(fs_portfolios)):
-
-  # gets current portfolio as df
-  get_current_portfolio(fs_portfolios)
+print(fs_portfolios)
