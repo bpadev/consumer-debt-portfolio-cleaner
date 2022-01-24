@@ -10,21 +10,10 @@ import pandas as pd
 import os
 
 
-fs_portfolios_directory = 'for-sale/'
+# Grab portfolios to read
+fs_directory_path = 'for-sale/'
 
-
-
-# pull directory list
-fs_portfolios = os.listdir(fs_portfolios_directory)
-
-# set portfolio to start
-current_check = fs_portfolios.pop(0)
-
-def clean(current):
-
-  for index, row in current.iterrows():
-
-    print(index, row)
+fs_portfolios = os.listdir(fs_directory_path)
 
 def get_current_portfolio(p):
 
