@@ -15,6 +15,7 @@ fs_portfolios = os.listdir(fs_directory_path)
 # Store amount of files for loop
 files_to_clean = len(fs_portfolios)
 
+duplicates = 0
 
 def make_dataframes(directory):
 
@@ -37,3 +38,41 @@ def make_dataframes(directory):
     dataframes.append(df)
 
   return dataframes
+
+def check_duplicates(row, dataframes, duplicates):
+
+  # go over all files in temp dataframes
+  for df in dataframes:
+
+    for row_comp in df.itertuples():
+      
+      if row[1] == row_comp[1]:
+
+        print('duplicate')
+
+
+def main():
+
+  # get dataframes
+  dataframes = make_dataframes(fs_directory_path)
+
+  # make copy
+  dataframes_temp = dataframes.copy()
+
+  # 
+  for df in dataframes:
+
+    # set current df
+    current_df = dataframes_temp.pop(0)
+
+    for row in current_df.itertuples():
+
+      # run check against others in list
+      check_duplicates(row, dataframes_temp, duplicates)  
+
+    # return to dataframes_temp
+    dataframes_temp.append(current_df)
+
+  print(dataframes_temp)
+
+main()
