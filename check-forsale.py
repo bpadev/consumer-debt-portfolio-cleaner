@@ -1,43 +1,39 @@
 # Check "for sale" portfolios against each other for duplicate accounts.
 
 # Approach
-# - grab all portfolios in the for-sale directory, store them as a list.
-# - pull out the first portfolio and remove it from portfolios list.
-# - run through all portfolios and check them against current check portfolio.
-# - once completed, append to end of list, pop portfolios[0] to current check, repeat.
+# - Make dataframes from directory
 
 import pandas as pd
 import os
 
 
-fs_portfolios_directory = 'for-sale/'
+# Grab portfolios to read
+fs_directory_path = 'for-sale/'
+
+fs_portfolios = os.listdir(fs_directory_path)
+
+# Store amount of files for loop
+files_to_clean = len(fs_portfolios)
 
 
+def make_dataframes(directory):
 
-# pull directory list
-fs_portfolios = os.listdir(fs_portfolios_directory)
+  # get list of file names in given directory
+  file_names = os.listdir(directory)
 
-# set portfolio to start
-current_check = fs_portfolios.pop(0)
+  # make empty list to hold dataframes
+  dataframes = []
 
-def clean(current):
+  # make files readable to pandas
+  for file in file_names:
+    
+    # add directory prefix
+    file = fs_directory_path + file
 
-  for index, row in current.iterrows():
+    # read as df
+    df = pd.read_excel(file)
+    
+    # store as dataframes
+    dataframes.append(df)
 
-    print(index, row)
-
-def get_current_portfolio(p):
-
-  # make path to current portfolio
-  path = fs_portfolios_directory + p[i]
-  
-  # read and store as dataframe
-  df = pd.read_excel(path)
-
-  return df
-
-
-for i in range(len(fs_portfolios)):
-
-  # gets current portfolio as df
-  get_current_portfolio(fs_portfolios)
+  return dataframes
