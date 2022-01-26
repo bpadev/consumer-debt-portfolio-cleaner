@@ -49,7 +49,7 @@ def check_duplicates(row, dataframes, duplicates):
     for row_comp in df.itertuples():
       
       # these grab values in their desired column, make sure every df has the same column setup for account ids
-      if row[1] == row_comp[1]:
+      if row[2] == row_comp[2]:
 
         duplicates += 1
 
